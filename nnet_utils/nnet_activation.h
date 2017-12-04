@@ -46,9 +46,9 @@ struct activ_config
 template<class data_T, class res_T, typename CONFIG_T>
 void  relu(data_T data[CONFIG_T::n_in], res_T res[CONFIG_T::n_in])
 {
-    if (CONFIG_T::io_type == io_parallel){
         #pragma HLS PIPELINE
-    }
+    // if (CONFIG_T::io_type == io_parallel){
+    // }
 
     data_T datareg;
     for (int ii=0; ii<CONFIG_T::n_in; ii++) {
@@ -121,7 +121,9 @@ void  sigmoid(data_T data[CONFIG_T::n_in], res_T res[CONFIG_T::n_in])
     int data_round;
     int index;
     for (int ii=0; ii<CONFIG_T::n_in; ii++) {
-        // #pragma HLS UNROLL
+        if (CONFIG_T::io_type == io_serial){
+            #pragma HLS PIPELINE
+        }
         data_round = data[ii]*CONFIG_T::table_size/16;
         index = data_round + 8*CONFIG_T::table_size/16;
         if (index < 0)   index = 0;

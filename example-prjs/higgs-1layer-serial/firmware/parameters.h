@@ -25,9 +25,9 @@ typedef ap_fixed<18,8> layer1_t;
 struct config1 : nnet::layer_config {
         static const unsigned n_in = N_INPUTS;
         static const unsigned n_out = N_LAYER_1;
-        static const unsigned io_type = nnet::io_parallel;
+        static const unsigned io_type = nnet::io_serial;
         static const unsigned reuse_factor = 1;
-        static const bool store_weights_in_bram = false;
+        static const bool store_weights_in_bram = true;
         typedef accum_default_t accum_t;
         typedef bias_default_t bias_t;
         typedef weight_default_t weight_t;
@@ -35,14 +35,14 @@ struct config1 : nnet::layer_config {
 struct relu_config1 : nnet::activ_config {
         static const unsigned n_in = N_LAYER_1;
         static const unsigned table_size = 1024;
-        static const unsigned io_type = nnet::io_parallel;
+        static const unsigned io_type = nnet::io_serial;
         };
 struct config2 : nnet::layer_config {
         static const unsigned n_in = N_LAYER_1;
         static const unsigned n_out = N_OUTPUTS;
-        static const unsigned io_type = nnet::io_parallel;
+        static const unsigned io_type = nnet::io_serial;
         static const unsigned reuse_factor = 1;
-        static const bool store_weights_in_bram = false;
+        static const bool store_weights_in_bram = true;
         typedef accum_default_t accum_t;
         typedef bias_default_t bias_t;
         typedef weight_default_t weight_t;
@@ -50,7 +50,7 @@ struct config2 : nnet::layer_config {
 struct sigmoid_config2 : nnet::activ_config {
         static const unsigned n_in = N_OUTPUTS;
         static const unsigned table_size = 1024;
-        static const unsigned io_type = nnet::io_parallel;
+        static const unsigned io_type = nnet::io_serial;
         };
 
 #endif 

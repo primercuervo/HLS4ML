@@ -37,10 +37,12 @@ void myproject(
 {
 
     //hls-fpga-machine-learning insert IO
-    #pragma HLS ARRAY_PARTITION variable=data complete 
-    #pragma HLS ARRAY_PARTITION variable=res complete 
+    // #pragma HLS ARRAY_PARTITION variable=data complete
+    // #pragma HLS ARRAY_PARTITION variable=res complete
+        #pragma HLS INTERFACE axis port=data
+        #pragma HLS INTERFACE axis port=res
 
-    #pragma HLS PIPELINE
+    #pragma HLS DATAFLOW
 
     const_size_in   = N_INPUTS;
     const_size_out  = N_OUTPUTS;
@@ -62,6 +64,5 @@ void myproject(
     #pragma HLS ARRAY_PARTITION variable=logits2 complete
     nnet::compute_layer<layer1_t, result_t, config2>(layer1_out, logits2, w2, b2);
     nnet::sigmoid<result_t, result_t, sigmoid_config2>(logits2, res);
-
 
 }
